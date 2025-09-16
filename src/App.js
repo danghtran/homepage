@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, Card, CardContent, Button, Box, Fade, Grid2, IconButton, Collapse } from "@mui/material";
+import { Container, Typography, Card, CardContent, Button, Box, Fade, Grid2, IconButton, Collapse, CardMedia } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -139,6 +139,42 @@ export default function App() {
         </Fade>
 
         <Fade in={showContent} timeout={1000}>
+          <Box textAlign="center" mb={5} mt={5}>
+            <Typography variant="h5" fontWeight={600} textAlign="center" gutterBottom>
+              Certificates
+            </Typography>
+            <Grid2 container spacing={5} columns={21} mt={2}>
+              <Grid2 size={{ xs: 7, sm: 7 }}>
+                <Card sx={{ bgcolor: "#bcd2f2ff" }}>
+                  <CardContent sx={{ textAlign: "center", paddingTop: 3 }}>
+                    <div data-iframe-width="270" data-iframe-height="240" data-share-badge-id="7194b350-1f50-4a30-9055-09fba5d67a1a" data-share-badge-host="https://www.credly.com"></div>
+                    <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+                  </CardContent>
+                </Card>
+              </Grid2>
+
+              <Grid2 size={{ xs: 7, sm: 7 }}>
+                <Card sx={{ bgcolor: "#bcd2f2ff" }}>
+                  <CardContent sx={{ textAlign: "center", paddingTop: 3 }}>
+                    <div data-iframe-width="270" data-iframe-height="240" data-share-badge-id="9e47e9f7-11f0-4e84-a87b-70317971ab93" data-share-badge-host="https://www.credly.com"></div>
+                    <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+                  </CardContent>
+                </Card>
+              </Grid2>
+
+              <Grid2 size={{ xs: 7, sm: 7 }}>
+                <Card sx={{ bgcolor: "#bcd2f2ff" }}>
+                  <CardContent sx={{ textAlign: "center", paddingTop: 3 }}>
+                    <div data-iframe-width="270" data-iframe-height="240" data-share-badge-id="5694b335-ecfa-44f4-8dee-ec7c7bb835fa" data-share-badge-host="https://www.credly.com"></div>
+                    <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+                  </CardContent>
+                </Card>
+              </Grid2>
+            </Grid2>
+          </Box>
+        </Fade>
+
+        <Fade in={showContent} timeout={1000}>
           <Box>
             <Typography variant="h5" fontWeight={600} textAlign="center" gutterBottom>
               Projects
@@ -150,7 +186,12 @@ export default function App() {
                     <Typography variant="h6" fontWeight={600} gutterBottom color="white">
                       3D Driving Game
                     </Typography>
-                    <Typography color="grey.500">
+                    <CardMedia
+                      component="img"
+                      image={`${process.env.PUBLIC_URL}/webgl_car.png`}
+                      sx={{ width: "100%", height: "50%", objectFit: "cover"}}
+                    />
+                    <Typography color="grey.500" paddingTop={2}>
                       This car-driving game is written in ReactJS with WebGL2, where you collect fuel and coins while avoiding obstacles in a 3D environment. It uses physical-based rendering, texture loading, GPU instancing, prototype pattern, AABB collision detection, and Phong shading for lighting.
                     </Typography>
                     <Button variant="outlined" sx={{ mt: 2, color: "white", borderColor: "#9ca3af" }} onClick={() => setOpenGame(true)}>
@@ -166,7 +207,12 @@ export default function App() {
                     <Typography variant="h6" fontWeight={600} gutterBottom color="white">
                       Benchmark Merkle Tree model for cloud-based verifiable database
                     </Typography>
-                    <Typography color="grey.500">
+                    <CardMedia
+                      component="img"
+                      image={`${process.env.PUBLIC_URL}/merkle_benchmark.png`}
+                      sx={{ width: "100%", height: "50%", objectFit: "cover"}}
+                    />
+                    <Typography color="grey.500" paddingTop={2}>
                       Explored and utilized Google Cloud Dataflow and Function to create a verifiable database with different Merkle Tree setup to improve data integrity while maintaining stable performance (average of 5 seconds per million data records)
                     </Typography>
                     <Button variant="outlined" sx={{ mt: 2, color: "white", borderColor: "#9ca3af" }} onClick={() => setOpenPrj1(true)}>
