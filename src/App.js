@@ -34,10 +34,10 @@ export default function App() {
               Hi, I'm Dang Tran
             </Typography>
             <Typography variant="h6" color="grey.500">
-              I'm a software engineer specializing in full-stack development, distributed systems, and web technologies.
+               A motivated and curious professional who enjoys solving problems and learning new skills.
             </Typography>
             <Typography variant="h6" color="grey.500">
-              I also have a passion for cybersecurity, especially Cryptographic. I am learning more to become an expert in this field.
+              I value teamwork and clear communication, but I’m also comfortable working independently.
             </Typography>
           </Box>
         </Fade>
@@ -70,7 +70,7 @@ export default function App() {
                         ))}
                       </ul>
                     ) : (
-                      <Typography color="grey.500">{card.content}</Typography>
+                      <Typography color="grey.500" textAlign={"justify"}>{card.content}</Typography>
                     )}
                   </CardContent>
                 </Card>
@@ -184,6 +184,63 @@ export default function App() {
                 <Card sx={{ bgcolor: "#1f2937" }}>
                   <CardContent>
                     <Typography variant="h6" fontWeight={600} gutterBottom color="white">
+                      Shoulder Surfing Detection Application
+                    </Typography>
+                    
+                    <Typography color="grey.500" paddingTop={2}>
+                      A desktop application to detect intentional shoulder surfer and hide/ blur sensitive data using GazeML.
+                    </Typography>
+                    <Button variant="outlined" sx={{ mt: 2, color: "white", borderColor: "#9ca3af" }}>
+                      Ongoing
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid2>
+
+              <Grid2 size={{ xs: 8, sm: 8 }}>
+                <Card sx={{ bgcolor: "#1f2937" }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight={600} gutterBottom color="white">
+                      Vulnerability Scanning Tool
+                    </Typography>
+                    
+                    <Typography color="grey.500" paddingTop={2}>
+                      A lightweight tool to scan vulnerabilities in open ports, protocols, and web headers of a host using Python.
+                    </Typography>
+                    <Button href="https://github.com/danghtran/Vul_Scanner" variant="outlined" target="_blank" rel="noopener noreferrer"
+                      sx={{ mt: 2, color: "white", borderColor: "#9ca3af" }}>
+                      Source & Download
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid2>
+
+              <Grid2 size={{ xs: 8, sm: 8 }}>
+                <Card sx={{ bgcolor: "#1f2937" }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight={600} gutterBottom color="white">
+                      Little Boy Game
+                    </Typography>
+                    <CardMedia
+                      component="img"
+                      image={`${process.env.PUBLIC_URL}/cross_road.png`}
+                      sx={{ width: "100%", height: "75%", objectFit: "cover"}}
+                    />
+                    <Typography color="grey.500" paddingTop={2}>
+                      A desktop game based on the classic game Cross The Road, developed using C++ and SDL2 library. The game is under develop and in early stages.
+                    </Typography>
+                    <Button href="https://github.com/danghtran/LittleBoy" variant="outlined" target="_blank" rel="noopener noreferrer"
+                      sx={{ mt: 2, color: "white", borderColor: "#9ca3af" }}>
+                      Source
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid2>
+
+              <Grid2 size={{ xs: 8, sm: 8 }}>
+                <Card sx={{ bgcolor: "#1f2937" }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight={600} gutterBottom color="white">
                       3D Driving Game
                     </Typography>
                     <CardMedia
@@ -292,7 +349,7 @@ const infoCards = [
   {
     title: "About Me",
     content:
-      "I have strong skills and 2 years of experience in developing distributed applications, and I am familiar with both back-end and front-end platforms such as SpringBoot, React, or Flutter. I am a quick, tech-savvy learner keen on learning new technologies. Currently, I am looking for a software engineer or cybersecurity analyst internship placement this year."
+      "I’m pursuing a Master’s in Computer Science and previously worked two years as a Software Engineer at Elca, gaining strong technical and professional experience. Over time, I developed a passion for cybersecurity, earning my CompTIA Security+ certification and practicing on platforms like TryHackMe. Now I’m motivated to bring my technical background, security mindset, energy, and drive for innovation to make real impacts."
   },
   {
     title: "Education",
