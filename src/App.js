@@ -207,9 +207,34 @@ export default function App() {
                     <Typography color="grey.500" paddingTop={2}>
                       A lightweight tool to scan vulnerabilities in open ports, protocols, and web headers of a host using Python.
                     </Typography>
+                    <Typography color="grey.500" paddingTop={2}>
+                      It now has an genAI suggestion for related CVEs for each report.
+                    </Typography>
                     <Button href="https://github.com/danghtran/Vul_Scanner" variant="outlined" target="_blank" rel="noopener noreferrer"
                       sx={{ mt: 2, color: "white", borderColor: "#9ca3af" }}>
                       Source & Download
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid2>
+
+              <Grid2 size={{ xs: 8, sm: 8 }}>
+                <Card sx={{ bgcolor: "#1f2937" }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight={600} gutterBottom color="white">
+                      Absorbent Gas Composition Visualization
+                    </Typography>
+                    <CardMedia
+                      component="img"
+                      image={`${process.env.PUBLIC_URL}/gas.png`}
+                      sx={{ width: "100%", height: "100%", objectFit: "cover"}}
+                    />
+                    <Typography color="grey.500" paddingTop={2}>
+                      Collaboration with chemistry department researchers to create a local tool that automatically import, clear, and process experimental data sets. The gases are presented corresponding to their volume in the 3D area using JS and Plotly. The visualization is interactive and the user can set the threshold or navigate the point of view.
+                    </Typography>
+                    <Button href="https://github.com/danghtran/gas_vis" variant="outlined" target="_blank" rel="noopener noreferrer"
+                      sx={{ mt: 2, color: "white", borderColor: "#9ca3af" }}>
+                      Source
                     </Button>
                   </CardContent>
                 </Card>
