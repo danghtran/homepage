@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "homepage": "https://danghtran.github.io/homepage/",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danghtran/homepage.git"
+  },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

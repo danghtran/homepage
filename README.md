@@ -1,3 +1,11 @@
+# Personal homepage
+
+Live site: **https://danghtran.github.io/homepage/**
+
+Portfolio for Dang Tran (cybersecurity & software engineering). See [GITHUB_PAGES.md](./GITHUB_PAGES.md) for deploying and linking this site on your GitHub profile.
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
