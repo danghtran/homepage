@@ -16,7 +16,10 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  Tab,
+  Tabs,
 } from "@mui/material";
+import SocTriageLabs from "./SocTriageLabs";
 import CloseIcon from "@mui/icons-material/Close";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -24,13 +27,16 @@ import EmailIcon from "@mui/icons-material/Email";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import SecurityIcon from "@mui/icons-material/Security";
-import { pageGradient, heroGradient, cardSx, accentBorders } from "./theme";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
+import { pageGradient, heroGradient, cardSx, accentBorders, navTabsSx } from "./theme";
 
 export default function App() {
   const [showContent, setShowContent] = useState(false);
   const [openGame, setOpenGame] = useState(false);
   const [openPrj1, setOpenPrj1] = useState(false);
   const [expandedExp, setExpandedExp] = useState({});
+  const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
     setTimeout(() => setShowContent(true), 300);
@@ -53,6 +59,49 @@ export default function App() {
       }}
     >
       <Container maxWidth="lg">
+        <Fade in={showContent} timeout={400}>
+          <Box
+            sx={{
+              mb: 4,
+              display: "flex",
+              justifyContent: "center",
+              p: 1,
+              background: "linear-gradient(135deg, #ffffff 0%, #ecfeff 100%)",
+              borderRadius: 4,
+              border: "1px solid",
+              borderColor: "divider",
+              boxShadow: "0 8px 28px rgba(2, 132, 199, 0.12)",
+            }}
+          >
+            <Tabs
+              value={activeTab}
+              onChange={(_, value) => setActiveTab(value)}
+              sx={navTabsSx}
+            >
+              <Tab
+                id="portfolio-tab"
+                aria-controls="portfolio-tabpanel"
+                icon={<PersonOutlineIcon sx={{ fontSize: 26 }} />}
+                iconPosition="start"
+                label="Portfolio"
+              />
+              <Tab
+                id="labs-tab"
+                aria-controls="labs-tabpanel"
+                icon={<MenuBookOutlinedIcon sx={{ fontSize: 26 }} />}
+                iconPosition="start"
+                label="Lab Write-ups"
+              />
+            </Tabs>
+          </Box>
+        </Fade>
+
+        <Box
+          role="tabpanel"
+          id="portfolio-tabpanel"
+          hidden={activeTab !== 0}
+          aria-labelledby="portfolio-tab"
+        >
         <Fade in={showContent} timeout={600}>
           <Card
             elevation={0}
@@ -354,6 +403,16 @@ export default function App() {
             />
           </DialogContent>
         </Dialog>
+        </Box>
+
+        <Box
+          role="tabpanel"
+          id="labs-tabpanel"
+          hidden={activeTab !== 1}
+          aria-labelledby="labs-tab"
+        >
+          <SocTriageLabs />
+        </Box>
       </Container>
     </Box>
   );

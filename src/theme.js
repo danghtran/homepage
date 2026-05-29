@@ -91,3 +91,45 @@ export const cardSx = {
 };
 
 export const accentBorders = ["primary.main", "secondary.main", "#f59e0b"];
+
+export const navTabsSx = {
+  width: "100%",
+  maxWidth: 560,
+  minHeight: 56,
+  "& .MuiTabs-flexContainer": {
+    gap: 1,
+  },
+  "& .MuiTabs-indicator": {
+    display: "none",
+  },
+  "& .MuiTab-root": {
+    flex: 1,
+    minHeight: 52,
+    py: 1.25,
+    px: { xs: 2, sm: 3 },
+    fontSize: { xs: "1rem", sm: "1.125rem" },
+    fontWeight: 600,
+    letterSpacing: "0.01em",
+    textTransform: "none",
+    color: "text.secondary",
+    borderRadius: 3,
+    transition: "color 0.2s ease, background-color 0.2s ease",
+    "& .MuiTab-iconWrapper": {
+      marginRight: 1,
+      marginBottom: "0 !important",
+    },
+    "&:hover": {
+      color: "primary.dark",
+      bgcolor: "rgba(13, 148, 136, 0.06)",
+    },
+  },
+  "& .MuiTab-root.Mui-selected": {
+    color: "primary.dark",
+    fontWeight: 700,
+    fontSize: { xs: "1.05rem", sm: "1.2rem" },
+    bgcolor: "rgba(13, 148, 136, 0.1)",
+    "& .MuiSvgIcon-root": {
+      color: "primary.main",
+    },
+  },
+};
