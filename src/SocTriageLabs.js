@@ -254,7 +254,7 @@ export default function SocTriageLabs() {
         title="Blue Team Lab Write-ups"
         subtitle={
           <>
-            Write-ups loaded from{" "}
+            Write-ups discovered automatically from{" "}
             <Box
               component="a"
               href={SOC_LAB_REPO_URL}

@@ -3,17 +3,8 @@ export const SOC_LAB_RAW_BASE = `https://raw.githubusercontent.com/${SOC_LAB_REP
 export const SOC_LAB_TREE_API = `https://api.github.com/repos/${SOC_LAB_REPO}/git/trees/main?recursive=1`;
 export const SOC_LAB_REPO_URL = `https://github.com/${SOC_LAB_REPO}`;
 
-const LAB_FOLDERS = new Set([
-  "soc_triage_labs",
-  "digital_forensic_labs",
-  "threat_intelligence_labs",
-]);
-
-const CATEGORY_LABELS = {
-  soc_triage_labs: "SOC triage",
-  digital_forensic_labs: "Digital forensics",
-  threat_intelligence_labs: "Threat intelligence",
-};
+/** Top-level paths that are not lab write-up folders. */
+const EXCLUDED_TOP_LEVEL = new Set(["images"]);
 
 export function rawUrlForLab(path) {
   return `${SOC_LAB_RAW_BASE}/${path}`;
@@ -31,7 +22,23 @@ function formatLabTitle(fileName) {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function labFromPath(path) {
+function formatCategory(folder) {
+  return folder
+    .replace(/_labs$/i, "")
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function isLabWriteupPath(path) {
+  if (!path.endsWith(".md")) return false;
+  if (!path.includes("/")) return false;
+  if (path.toLowerCase().includes("template")) return false;
+
+  const topLevel = path.split("/")[0];
+  return !EXCLUDED_TOP_LEVEL.has(topLevel);
+}
+
+function labFromPath(path, title) {
   const parts = path.split("/");
   const folder = parts[0];
   const fileName = parts[parts.length - 1];
@@ -40,13 +47,28 @@ function labFromPath(path) {
     id: path,
     path,
     fileName,
-    title: formatLabTitle(fileName),
-    category: CATEGORY_LABELS[folder] || folder,
+    title: title || formatLabTitle(fileName),
+    category: formatCategory(folder),
     githubUrl: githubBlobUrl(path),
   };
 }
 
-/** List every lab write-up markdown under lab folders (excludes templates and root docs). */
+async function fetchTitleFromWriteup(path) {
+  try {
+    const res = await fetch(rawUrlForLab(path));
+    if (!res.ok) return null;
+    const text = await res.text();
+    const match = text.match(/^#\s+(.+)$/m);
+    return match ? match[1].trim() : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Discover all lab write-ups from the repo tree (no hardcoded folder list).
+ * Any .md under a subfolder is included, except templates and images/.
+ */
 export async function fetchAllLabWriteups() {
   const res = await fetch(SOC_LAB_TREE_API);
   if (!res.ok) {
@@ -54,20 +76,21 @@ export async function fetchAllLabWriteups() {
   }
 
   const { tree } = await res.json();
+  const paths = tree
+    .filter((item) => item.type === "blob" && isLabWriteupPath(item.path))
+    .map((item) => item.path);
 
-  return tree
-    .filter(
-      (item) =>
-        item.type === "blob" &&
-        item.path.endsWith(".md") &&
-        LAB_FOLDERS.has(item.path.split("/")[0]) &&
-        !item.path.toLowerCase().includes("template")
-    )
-    .map((item) => labFromPath(item.path))
-    .sort(
-      (a, b) =>
-        a.category.localeCompare(b.category) || a.title.localeCompare(b.title)
-    );
+  const labs = await Promise.all(
+    paths.map(async (path) => {
+      const title = await fetchTitleFromWriteup(path);
+      return labFromPath(path, title);
+    })
+  );
+
+  return labs.sort(
+    (a, b) =>
+      a.category.localeCompare(b.category) || a.title.localeCompare(b.title)
+  );
 }
 
 /** Rewrite relative image paths from writeup markdown to raw GitHub URLs. */
