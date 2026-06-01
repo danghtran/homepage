@@ -93,17 +93,67 @@ export async function fetchAllLabWriteups() {
   );
 }
 
-/** Rewrite relative image paths from writeup markdown to raw GitHub URLs. */
+function getLabDir(labPath) {
+  const idx = labPath.lastIndexOf("/");
+  return idx === -1 ? "" : labPath.slice(0, idx);
+}
+
+/** Resolve a relative path against a base directory within the repo. */
+function resolveRelativePath(baseDir, relativePath) {
+  const stack = baseDir ? baseDir.split("/") : [];
+  const parts = relativePath.replace(/\\/g, "/").split("/");
+
+  for (const part of parts) {
+    if (!part || part === ".") continue;
+    if (part === "..") {
+      if (stack.length) stack.pop();
+    } else {
+      stack.push(part);
+    }
+  }
+
+  return stack.join("/");
+}
+
+function toRawGitHubUrl(repoPath) {
+  const encoded = repoPath
+    .split("/")
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
+  return `${SOC_LAB_RAW_BASE}/${encoded}`;
+}
+
+/**
+ * Rewrite relative image paths from writeup markdown to raw GitHub URLs.
+ * Supports ../images/, images/ (repo root), ./local, and nested paths.
+ */
 export function resolveWriteupImageSrc(src, labPath) {
-  if (!src || src.startsWith("http://") || src.startsWith("https://")) {
-    return src;
+  if (!src) return src;
+
+  const trimmed = src.trim();
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed;
   }
-  if (src.startsWith("../images/")) {
-    return `${SOC_LAB_RAW_BASE}/images/${src.slice("../images/".length)}`;
+
+  let path = decodeURIComponent(trimmed);
+  const labDir = getLabDir(labPath);
+
+  if (path.startsWith("/")) {
+    path = path.slice(1);
   }
-  if (src.startsWith("./")) {
-    const folder = labPath.includes("/") ? labPath.replace(/\/[^/]+$/, "") : "";
-    return `${SOC_LAB_RAW_BASE}/${folder}/${src.slice(2)}`;
+
+  if (path.startsWith("../") || path.startsWith("./")) {
+    return toRawGitHubUrl(resolveRelativePath(labDir, path));
   }
-  return src;
+
+  // New write-ups often use images/foo.png (repo-root images/) instead of ../images/
+  if (path.startsWith("images/")) {
+    return toRawGitHubUrl(path);
+  }
+
+  if (labDir) {
+    return toRawGitHubUrl(`${labDir}/${path}`);
+  }
+
+  return toRawGitHubUrl(path);
 }
